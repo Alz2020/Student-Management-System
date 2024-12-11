@@ -15,8 +15,12 @@ protected:
     virtual void displayInfo() = 0;
     // destructor
     virtual ~Person() = default;
+};
 
-    
+// derived  class for student
+class Student : public Person {
+    private:
+    int studentID;
 };
 
 #endif
