@@ -13,8 +13,10 @@ protected:
     Person(std::string &name, int age);
     // pure function 
     virtual void displayInfo() = 0;
+    // destructor
+    virtual ~Person() = default;
+
     
-    
-}
+};
 
 #endif
