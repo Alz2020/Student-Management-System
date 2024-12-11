@@ -24,6 +24,12 @@ class Student : public Person {
     int studentID;
     // vector 
     std::vector<std::pair<std::string, double>> grades;
+    public:
+    //constructor
+    Student(const std::string &name, int age, int studentID);
+    // getter for ID 
+    int getID() const;
+    
 };
 
 #endif
