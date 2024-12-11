@@ -11,6 +11,9 @@ protected:
     public:
     // constructor
     Person(std::string &name, int age);
+    // pure function 
+    virtual void displayInfo() = 0;
+    
     
 }
 
