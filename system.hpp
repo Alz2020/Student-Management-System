@@ -9,6 +9,8 @@ protected:
     std::string name;
     int age;
     public:
+    // constructor
+    Person(std::string &name, int age);
     
 }
 
