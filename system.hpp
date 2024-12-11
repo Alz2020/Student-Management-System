@@ -1,7 +1,8 @@
 // header guard
 #ifndef SYSTEM_HPP
 #define SYSTEM_HPP
-
+#include <string>
+#include<vector>
 // class
 class Person
 {
@@ -21,6 +22,8 @@ protected:
 class Student : public Person {
     private:
     int studentID;
+    // vector 
+    std::vector<std::pair<std::string, double>> grades;
 };
 
 #endif
