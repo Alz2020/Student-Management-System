@@ -13,7 +13,7 @@ protected:
     // constructor
     Person(std::string &name, int age);
     // pure function 
-    virtual void displayInfo() = 0;
+    virtual void displayInfo() const= 0;
     // destructor
     virtual ~Person() = default;
 };
@@ -31,6 +31,10 @@ class Student : public Person {
     int getID() const;
     // add a grade for each course 
     void addGrade(const std::string &course, double grade);
+    // override display info to show student details
+    void displayInfo() const override;
+    // destructor
+    ¬Student() = default;
     
 };
 
