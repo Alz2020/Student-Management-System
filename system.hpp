@@ -29,6 +29,8 @@ class Student : public Person {
     Student(const std::string &name, int age, int studentID);
     // getter for ID 
     int getID() const;
+    // add a grade for each course 
+    void addGrade(const std::string &course, double grade);
     
 };
 
