@@ -34,8 +34,23 @@ class Student : public Person {
     // override display info to show student details
     void displayInfo() const override;
     // destructor
-    ¬Student() = default;
-    
+    ~Student() = default;  
+};
+
+// class for representing a course
+class Course {
+    private:
+    std::string courseName;
+    int courseID;
+    public:
+    // constructor
+    Course(const std::string &courseName, int courseID);
+    //getter 
+    int getID() const;
+
+    // display course info
+    void displayInfo() const;
+    ~Course() = default;
 };
 
 #endif
