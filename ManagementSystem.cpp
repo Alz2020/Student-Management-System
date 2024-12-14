@@ -36,5 +36,9 @@ int Course::getID() const
 }
 void Course::displayInfo() const {
     std::cout << "Course ID:" << courseID << "\nCourse Name:" << courseName << '\n';
-    
+
+}
+// add a new course in management system
+void ManagementSystem::addCourse(const std::string &courseName, int courseID) {
+    courses.push_back(std::make_unique<Course>(courseName, courseID));
 }
