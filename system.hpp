@@ -3,6 +3,7 @@
 #define SYSTEM_HPP
 #include <string>
 #include<vector>
+#include <memory>
 // class
 class Person
 {
@@ -52,5 +53,28 @@ class Course {
     void displayInfo() const;
     ~Course() = default;
 };
+
+// management system class
+class ManagementSystem {
+    private:
+    std::vector<std::unique_ptr<Student>> student;
+    std::vector<std::unique_ptr<Course>> course;
+    public:
+    // a new student
+    void addStudent(const std::string &name, int age, int studnet);
+    // a new course
+    void addCourse(const std::string &courseName, int courseID);
+
+    //display students
+    void displaystudents()const;
+    //display courses
+    void displaycourses()const;
+    
+    //retrieve a student by id 
+    Student* getStudentById(int studentID);
+    ~ManagementSystem() = default;
+
+};
+
 
 #endif
