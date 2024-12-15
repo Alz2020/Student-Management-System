@@ -5,6 +5,7 @@
 #include<vector>
 #include <memory>
 #include <iostream>
+#include<stdexcept>
 // class
 class Person
 {
@@ -58,8 +59,8 @@ class Course {
 // management system class
 class ManagementSystem {
     private:
-    std::vector<std::unique_ptr<Student>> student;
-    std::vector<std::unique_ptr<Course>> course;
+    std::vector<std::unique_ptr<Student>> students;
+    std::vector<std::unique_ptr<Course>> courses;
     public:
     // a new student
     void addStudent(const std::string &name, int age, int studnet);
@@ -67,9 +68,9 @@ class ManagementSystem {
     void addCourse(const std::string &courseName, int courseID);
 
     //display students
-    void displaystudents()const;
+    void displayStudents() const;
     //display courses
-    void displaycourses()const;
+    void displayCourses() const;
     
     //retrieve a student by id 
     Student* getStudentById(int studentID);

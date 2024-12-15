@@ -40,11 +40,18 @@ void Course::displayInfo() const {
 }
 // add a new course in management system
 void ManagementSystem::addCourse(const std::string &courseName, int courseID) {
-    course.push_back(std::make_unique<Course>(courseName, courseID));
+    courses.push_back(std::make_unique<Course>(courseName, courseID));
 }
 
 // add a new student in management system
 void ManagementSystem::addStudent(const std::string &name, int age, int studentID) {
-    student.push_back(std::make_unique<Student>(name, age, studemtID));
+    students.push_back(std::make_unique<Student>(name, age, studentID));
 
+}
+
+// display all courses in management system
+void ManagementSystem::displayCourses() const {
+    for (const auto &course: courses) {
+        course->displayInfo();
+    }
 }
