@@ -73,7 +73,7 @@ class ManagementSystem {
     void displayCourses() const;
     
     //retrieve a student by id 
-    Student* getStudentById(int studentID);
+    Student* getStudentByID(int studentID);
     ~ManagementSystem() = default;
 
 };

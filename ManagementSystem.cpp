@@ -61,3 +61,12 @@ void ManagementSystem::displayStudents() const {
         student->displayInfo();
     }
 }
+
+//get a student by ID in managment system class
+Student* ManagementSystem::getStudentByID( int studentID) {
+    Student *student = findByID(students, studentID);
+    if (!student) {
+        throw std::runtime_error("Student ID not found");
+    }
+    return student;
+}
