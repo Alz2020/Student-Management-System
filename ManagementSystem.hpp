@@ -61,6 +61,15 @@ public:
     ~Course() = default;
 };
 
+//create template function 
+template <typename T>
+T* findById(std::vector<std::unique_ptr<T>> &collection, int id) {
+    for (const auto &item : collection) {
+        if (item->getID() ==id) return item.get();
+    }
+    return nullptr;
+}
+
 // management system class
 class ManagementSystem
 {
