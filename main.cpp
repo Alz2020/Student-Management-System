@@ -1,94 +1,60 @@
-#include "system.hpp"
-#include <iostream>
-#include <cstdlib>
-using namespace std;
+#include "ManagementSystem.hpp"
 
-int main() {
+int main()
+{
+    ManagementSystem system;
+    int choice;
 
-    system("CLS");
-    system("color B1");
-    int choices;
-    int id;
-    int searchkey;
+    while (true)
+    {
+        std::cout << "\n1. Add Student\n2. Add Course\n2. Display Students\n4. Display Courses\n5.Exit\nChoose an option: ";
+        std::cin >> choice;
 
-    while (ts--){
-    cout <<"\n ------------------------------------------------------"<< endl;
-    cout << "---Welcome to the Software Development Student System---"<< endl;
-    cout <<"\n ------------------------------------------------------"<< endl;
-    cout <<"\n1-Add student" << endl;
-    cout <<"\n2-Edit student" << endl;
-    cout <<"\n3-Searche student" << endl;
-    cout <<"\n4-Delete student" << endl;
-    cout <<"\n5-Display all students" << endl;
-    cout <<"\n6-Exit" << endl;
-    cout <<"\n--------------------------------------------------------"<< endl;
-    cout << "\nEnter your choice: ";
-
-    cin >> choices;
-    switch(choices){
-        case 1:
-            add_student();
-            break;
-        case 2:
-            if (rec[0].id==0) {
-                cout << "Please enter student first." << endl;
-                system("pause");
-                main();
-                } else {
-                    cout << "Student already exists." << endl;
-                    cout << "id" << "name"<<"age" << "grade" << "email" << "gender" << endl;
-                    cout << "-------------------------------------------" << endl;
-                    for (int i = 0; i < rec[0].id; i++) {
-                        display_data(i);
-                }
-                cout << "-------------------------------------------" << endl;
-                cout << "\nEnter the id of the student to edit: ";
-                cin >> id;
-
-                if (id > ts || id < 0) {
-                    cout << "Invalid id. Please try again." << endl;
-                } else {
-                    edit_student(id);
-                }
-
+        try
+        {
+            if (choice == 1)
+            {
+                std::string name;
+                int age, id;
+                std::cout << "Enter student name, age, and ID:";
+                std::cin >> name >> age >> id;
+                system.addStudent(name, age, id);
             }
-            break;
-
-            case 3:
-            if (rec[0].id==0) {
-                cout << "Please enter student first." << endl;
-                system("pause");
-                main();
-                } else {
-                    cout << "Enter id of student you want to reasrch:";
-                    cin >> searchkey;
-                    search_student(searchkey);
-                }
+            else if (choice == 2)
+            {
+                std::string courseName;
+                int courseID;
+                std::cout << "Enter course name and ID:";
+                std::cin >> courseName >> courseID;
+                system.addCourse(courseName, courseID);
+            }
+            else if (choice == 3)
+            {
+                system.displayStudents();
+            }
+            else if (choice == 4)
+            {
+                system.displayCourses();
+            }
+            else if (choice == 5)
+            {
                 break;
-
-                case 4:
-                    return 0;
-                default:
-                system("pause");
-                main();
+            }
+            else
+            {
+                std::cout << "Invalid coption. Try again.\n";
             }
         }
-        return 0;
+        catch (const std::exception &e)
+        {
+        }
+        std::cerr << "Error:" << e.what() << '\n';
+        {
+        }
+        {
+        }
+        {
+        }
     }
-    //         edit_student();
-    //         break;
-    //     case 3:
-    //         search_student();
-    //         break;
-    //     case 4:
-    //         delete_student();
-    //         break;
-    //     case 5:
-    //         display_students();
-    //         break;
-    //     case 6:
-    //         exit(0);
-    //     default:
-    //         cout<<"\nInvalid choice. Please try again."<<endl;
-    // }
-
+    return 0;
+}

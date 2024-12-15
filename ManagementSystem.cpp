@@ -1,6 +1,7 @@
 #include "ManagementSystem.hpp"
 #include <iostream>
 
+
 // person class constructor
 Person::Person(const std::string &name, int age) : name(name), age(age) {}
 
@@ -62,8 +63,8 @@ void ManagementSystem::displayStudents() const {
     }
 }
 
-//get a student by ID in managment system class
-Student* ManagementSystem::getStudentByID( int studentID) {
+//get a student by ID in management system class
+Student* ManagementSystem::getStudentByID(int studentID) {
     Student *student = findByID(students, studentID);
     if (!student) {
         throw std::runtime_error("Student ID not found");
