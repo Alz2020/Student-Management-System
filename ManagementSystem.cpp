@@ -55,3 +55,9 @@ void ManagementSystem::displayCourses() const {
         course->displayInfo();
     }
 }
+// display all students in management system
+void ManagementSystem::displayStudents() const {
+    for (const auto &student: students) {
+        student->displayInfo();
+    }
+}
