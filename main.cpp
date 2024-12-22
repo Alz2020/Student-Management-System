@@ -37,3 +37,24 @@ void addStudent(std::vector<Student>& students){
     students.push_back(newStudent); // add the new student to the vector
     std::cout << "\033[1;32mStudent added successfully!\033[0m\n";
 }
+
+// create function to edit an existing student 
+void editStudent(std::vector<Student>& students){
+    int IDNumber;
+    std::cout << "Enter the ID number of the student to edit:";
+    std::cin >> IDNumber;
+
+    for (auto& student : students){
+        if (student.IDNumber == IDNumber){
+            std::cout << "Enter new name:";
+            std::cin.ignore(); // to clear buffer before accepting new name
+            std::getline(std::cin, student.name);
+
+            std::cout <<"Enter new marks:";
+            std::cin >> student.marks;
+            std::cout << "\033[1;32mStudent record update successfully!\033[0m\n";
+            return;
+        }
+    }
+    std::cout << "\033[1;31mNo student found with the given ID number.\033[0m\n";
+}
