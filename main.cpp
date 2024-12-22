@@ -58,3 +58,19 @@ void editStudent(std::vector<Student>& students){
     }
     std::cout << "\033[1;31mNo student found with the given ID number.\033[0m\n";
 }
+// function to search for a student
+void searchStudent(std::vector<Student>& students){
+    int IDNumber;
+    std::cout << "Enter the ID number of the student to search ";
+    std::cin >> IDNumber;
+    for (const auto& student : students){
+        if (student.IDNumber == IDNumber){
+            std::cout << "\nStudent Details:\n";
+            std::cout << "ID Number: " << student.IDNumber << "\n";
+            std::cout << "Name: " << student.name << "\n";
+            std::cout << "Marks: " << student.marks << "\n";
+            return;
+        }
+    }
+    std::cout << "\033[1;31mNo student found with the given ID number.\033[0m\n";
+}
