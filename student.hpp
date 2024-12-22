@@ -7,7 +7,7 @@
 // define a structure to store student details
 struct Student {
     int IDNumber;
-    std::string Name;
+    std::string name;
     float marks;
 };
 // function declarations

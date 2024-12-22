@@ -21,3 +21,19 @@ void displayMenu() {
     std::cout <<"\033[0m";
     std::cout << "Enter your choice: ";
 }
+// function to add student with pointer 
+void addStudent(std::vector<Student>& students){
+    Student newStudent;
+    std::cout << "Enter ID number:";
+    std::cin >> newStudent.IDNumber;
+    std::cin.ignore(); // clear the input buffer
+
+    std::cout << "Enter name:";
+    std::getline(std::cin, newStudent.name);
+
+    std::cout <<"Enter marks: ";
+    std::cin >> newStudent.marks;
+
+    students.push_back(newStudent); // add the new student to the vector
+    std::cout << "\033[1;32mStudent added successfully!\033[0m\n";
+}
