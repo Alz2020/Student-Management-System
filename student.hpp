@@ -15,7 +15,7 @@ void displayMenu();
 void addStudent(std::vector<Student>& students);
 void editStudent(std::vector<Student>& students);
 void searchStudent(const std::vector<Student>& students);
-void showAllStudent(const std::vector<Student>& students)
+void showAllStudent(const std::vector<Student>& students);
 
 
 
