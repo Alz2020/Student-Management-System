@@ -7,6 +7,33 @@
 #include <memory>
 #include <sstream>
 
+// base class person
+class Person {
+protected:
+    int IDNumber;
+    std::string name;
+
+public:
+    Person(int id = 0, const std::string& name = "") : IDNumber(id), name(name) {}
+
+    //getter and setter for id number
+    int getIDNumber() const { return IDNumber; }
+    void setIDNumber(int id) { IDNumber = id; }
+
+    //getter and setter for name
+    const std::string& getName() const {return name; }
+    void setName(const std::string& newName) {name = newName; }
+
+    //virtual function for displaying information
+    virtual void displayInfo() const {
+        std::cout <<std::left <<std::setw(12) <<IDNumber << std::setw(20) << name;
+    }
+    // virtual destructor 
+    virtual ~Person() = default;
+};
+
+
+
 // define a structure to store student details
 struct Student {
     int IDNumber;
