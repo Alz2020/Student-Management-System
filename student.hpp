@@ -29,6 +29,29 @@ void saveToFile(const std::vector<Student>& students, const std::string& filenam
         std::cout << "\033[1;31mUnable to save data!\033[0m\n";
     }
 }
+// load from file 
+void loadFromFile(std::vector<Student>& students, const std::string& filename){
+    std::ifstream file(filename, std::ios::in);
+    if (file.is_open()) {
+        students. clear();
+        Student temp;
+        std::string line;
+        while (std::getline(file,line)) {
+            std::istringstream ss(line);
+            std::string id, marks;
+            std::getline(ss, id, ',');
+            std::getline(ss, temp.name, ',');
+            std::getline(ss, marks, ',');
+            temp.IDNumber = std::stoi(id);
+            temp.marks = std::stof(marks);
+            students.push_back(temp);
+        }
+        file.close();
+        std::cout << "\033[1;32mData loaded successfully!\033[0m\n";
+    } else{
+        std::cout << "\033[1;31mUnable to load data!\033[0m\n";
+    }
+}
 
 
 #endif // !STUDENT_HPP
