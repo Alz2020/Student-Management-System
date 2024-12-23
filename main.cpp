@@ -26,36 +26,36 @@ void displayMenu() {
     std::cout << "Enter your choice: ";
 }
 // function to add student 
-void addStudent(std::vector<Student>& students){
-    Student newStudent;
+void addStudent(std::vector<std::unique_ptr<Student>>& students){
+    auto newStudent = std::make_unique<Student>();
     std::cout << "Enter ID number:";
-    std::cin >> newStudent.IDNumber;
+    std::cin >> newStudent->IDNumber;
     std::cin.ignore(); // clear the input buffer
 
     std::cout << "Enter name:";
-    std::getline(std::cin, newStudent.name);
+    std::getline(std::cin, newStudent->name);
 
     std::cout <<"Enter marks: ";
-    std::cin >> newStudent.marks;
+    std::cin >> newStudent->marks;
 
-    students.push_back(newStudent); // add the new student to the vector
+    students.push_back(std::move(newStudent)); 
     std::cout << "\033[1;32mStudent added successfully!\033[0m\n";
 }
 
 // create function to edit an existing student 
-void editStudent(std::vector<Student>& students){
+void editStudent(std::vector<std::unique_ptr<Student>>& students) {
     int IDNumber;
     std::cout << "Enter the ID number of the student to edit:";
     std::cin >> IDNumber;
 
     for (auto& student : students){
-        if (student.IDNumber == IDNumber){
+        if (student->IDNumber == IDNumber){
             std::cout << "Enter new name:";
             std::cin.ignore(); // to clear buffer before accepting new name
-            std::getline(std::cin, student.name);
+            std::getline(std::cin, student->name);
 
             std::cout <<"Enter new marks:";
-            std::cin >> student.marks;
+            std::cin >> student->marks;
             std::cout << "\033[1;32mStudent record update successfully!\033[0m\n";
             return;
         }
@@ -63,23 +63,23 @@ void editStudent(std::vector<Student>& students){
     std::cout << "\033[1;31mNo student found with the given ID number.\033[0m\n";
 }
 // function to search for a student
-void searchStudent(std::vector<Student>& students){
+void searchStudent(std::vector<std::unique_ptr<Student>>& students) {
     int IDNumber;
     std::cout << "Enter the ID number of the student to search ";
     std::cin >> IDNumber;
     for (const auto& student : students){
-        if (student.IDNumber == IDNumber){
+        if (student->IDNumber == IDNumber){
             std::cout << "\nStudent Details:\n";
-            std::cout << "ID Number: " << student.IDNumber << "\n";
-            std::cout << "Name: " << student.name << "\n";
-            std::cout << "Marks: " << student.marks << "\n";
+            std::cout << "ID Number: " << student->IDNumber << "\n";
+            std::cout << "Name: " << student->name << "\n";
+            std::cout << "Marks: " << student->marks << "\n";
             return;
         }
     }
     std::cout << "\033[1;31mNo student found with the given ID number.\033[0m\n";
 }
 // function to display all students
-void showAllStudents(const std::vector<Student>& students) {
+void showAllStudents(const std::vector<std::unique_ptr<Student>>& students) {
     if (students.empty()) { // to check if there are no student to display
     std::cout << "\033[1;31mNo student to display.\033[0m\n";
     return;
@@ -91,15 +91,15 @@ std::cout << std::left << std::setw(12) << "ID number"
         << std::setw(10) << "Marks" << "\n";
 
 for (const auto& student : students) {
-    std::cout << std::left << std::setw(12) << student.IDNumber
-    << std::setw(20) << student.name
-    << std::setw(10) << student.marks << "\n";
+    std::cout << std::left << std::setw(12) << student->IDNumber
+    << std::setw(20) << student->name
+    << std::setw(10) << student->marks << "\n";
     }
 }
 
 
 int main() {
-    std::vector<Student> students; // create a vector to hold student 
+    std::vector<std::unique_ptr<Student>> students; 
     int choice;
     do{
         displayMenu();
