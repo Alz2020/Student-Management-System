@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <iomanip>
+#include <memory>
 #include "student.hpp"
 
 // function to display the main menu
@@ -18,10 +19,13 @@ void displayMenu() {
     std::cout <<"3 - Search Student\n";
     std::cout <<"4 - Show All Student\n";
     std::cout <<"5 - Quit program\n";
+    //update menu options with file 
+    std::cout << "6 - Save to file\n";
+    std::cout << "7 - Load from file\n";
     std::cout <<"\033[0m";
     std::cout << "Enter your choice: ";
 }
-// function to add student with pointer 
+// function to add student 
 void addStudent(std::vector<Student>& students){
     Student newStudent;
     std::cout << "Enter ID number:";
@@ -73,4 +77,58 @@ void searchStudent(std::vector<Student>& students){
         }
     }
     std::cout << "\033[1;31mNo student found with the given ID number.\033[0m\n";
+}
+// function to display all students
+void showAllStudents(const std::vector<Student>& students) {
+    if (students.empty()) { // to check if there are no student to display
+    std::cout << "\033[1;31mNo student to display.\033[0m\n";
+    return;
+}
+
+std::cout << "\n\033[1;36mAll Students:\033[0m\n";
+std::cout << std::left << std::setw(12) << "ID number"
+        << std::setw(20) << "Name"
+        << std::setw(10) << "Marks" << "\n";
+
+for (const auto& student : students) {
+    std::cout << std::left << std::setw(12) << student.IDNumber
+    << std::setw(20) << student.name
+    << std::setw(10) << student.marks << "\n";
+    }
+}
+
+
+int main() {
+    std::vector<Student> students; // create a vector to hold student 
+    int choice;
+    do{
+        displayMenu();
+        std::cin >> choice;
+        switch (choice) {
+        case 1:
+            addStudent(students);
+            break;
+        case 2:
+            editStudent(students);
+            break;
+        case 3:
+            searchStudent(students);
+            break;
+        case 4:
+            showAllStudents(students);
+            break;
+        case 5 :
+            std::cout << "\033[1;32mExiting \033[0m\n";
+            break;
+        case 6:
+            saveToFile(students, "students.txt");
+            break;
+        case 7:
+            loadFromFile(students, "students.txt");
+            break;
+        default:
+            std::cout << "\033[1;31mInvalid choice. Please try again.\033[0m\n";
+        }
+    }  while (choice != 5);
+    return 0;
 }
