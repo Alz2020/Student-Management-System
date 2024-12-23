@@ -31,6 +31,11 @@ void saveToFile(const std::vector<Student>& students, const std::string& filenam
 }
 // load from file 
 void loadFromFile(std::vector<Student>& students, const std::string& filename){
+    // improve error handling
+    try {
+        std::ifstream file(filename,std::ios::in);
+        if (!file) throw std::ios_base::failure("Failed to open file");
+    
     std::ifstream file(filename, std::ios::in);
     if (file.is_open()) {
         students. clear();
@@ -46,11 +51,14 @@ void loadFromFile(std::vector<Student>& students, const std::string& filename){
             temp.marks = std::stof(marks);
             students.push_back(temp);
         }
-        file.close();
         std::cout << "\033[1;32mData loaded successfully!\033[0m\n";
     } else{
-        std::cout << "\033[1;31mUnable to load data!\033[0m\n";
+        std::cerr << "\033[1;31mUnable to load data!\033[0m\n";
+    } catch (const std::exception& e){
+        std::cerr << "\033[1;31mError: " << e.what() << "\033[0m\n";
+        }
     }
+
 }
 
 
