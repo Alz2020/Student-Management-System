@@ -16,17 +16,21 @@ void displayMenu() {
 }
 // function to add student 
 void addStudent(std::vector<std::unique_ptr<Student>>& students){
-    auto newStudent = std::make_unique<Student>();
+    int id;
+    std::string name;
+    float marks;
+
     std::cout << "Enter ID number:";
-    std::cin >> newStudent->IDNumber;
+    std::cin >> id;
     std::cin.ignore(); // clear the input buffer
 
     std::cout << "Enter name:";
-    std::getline(std::cin, newStudent->name);
+    std::getline(std::cin, name);
 
     std::cout <<"Enter marks: ";
-    std::cin >> newStudent->marks;
+    std::cin >> marks;
 
+    auto newStudent = std::make_unique<Student>(id, name, marks);
     students.push_back(std::move(newStudent)); 
     std::cout << "\033[1;32mStudent added successfully!\033[0m\n";
 }
