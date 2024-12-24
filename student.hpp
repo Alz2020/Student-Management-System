@@ -34,11 +34,21 @@ public:
 
 
 
-// define a structure to store student details
-struct Student {
-    int IDNumber;
-    std::string name;
+// derived class : student
+class Student : public Person {
+private:
     float marks;
+public:
+    Student(int id =0, const std::string& name="", float marks =0.0f)
+    : Person(id, name), marks(marks) {}
+    // getter and setter for marks
+float getMarks() const { return marks; }
+void setMarks(float newMarks) { marks = newMarks; }
+// override displayInfo to include marks
+void displayInfo() const override {
+    Person::displayInfo();
+    std::cout << std::setw(10) << marks << std
+    }
 };
 // function declarations
 void displayMenu();
