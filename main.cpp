@@ -35,20 +35,25 @@ void addStudent(std::vector<std::unique_ptr<Student>>& students){
     std::cout << "\033[1;32mStudent added successfully!\033[0m\n";
 }
 
-// create function to edit an existing student 
+//  Function to edit an existing student 
 void editStudent(std::vector<std::unique_ptr<Student>>& students) {
-    int IDNumber;
+    int id;
     std::cout << "Enter the ID number of the student to edit:";
-    std::cin >> IDNumber;
+    std::cin >> id;
 
     for (auto& student : students){
-        if (student->IDNumber == IDNumber){
+        if (student->getIDNumber() == id){
+            std::string newName;
+            float newMarks;
+
             std::cout << "Enter new name:";
             std::cin.ignore(); // to clear buffer before accepting new name
-            std::getline(std::cin, student->name);
+            std::getline(std::cin, newName);
 
             std::cout <<"Enter new marks:";
-            std::cin >> student->marks;
+            std::cin >> newMarks;
+            student->setName(newName);
+            student->setMarks(newMarks);
             std::cout << "\033[1;32mStudent record update successfully!\033[0m\n";
             return;
         }
