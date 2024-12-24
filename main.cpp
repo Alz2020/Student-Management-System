@@ -60,17 +60,15 @@ void editStudent(std::vector<std::unique_ptr<Student>>& students) {
     }
     std::cout << "\033[1;31mNo student found with the given ID number.\033[0m\n";
 }
-// function to search for a student
+// function for search for a student
 void searchStudent(std::vector<std::unique_ptr<Student>>& students) {
-    int IDNumber;
+    int id;
     std::cout << "Enter the ID number of the student to search ";
-    std::cin >> IDNumber;
+    std::cin >> id;
     for (const auto& student : students){
-        if (student->IDNumber == IDNumber){
-            std::cout << "\nStudent Details:\n";
-            std::cout << "ID Number: " << student->IDNumber << "\n";
-            std::cout << "Name: " << student->name << "\n";
-            std::cout << "Marks: " << student->marks << "\n";
+        if (student->getIDNumber() == id){
+            std::cout << "\n\033[1;36mStudent Details:\033[0m\n";
+            student->displayInfo();
             return;
         }
     }
