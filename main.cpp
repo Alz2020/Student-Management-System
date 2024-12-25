@@ -117,7 +117,23 @@ for (const auto& student : students) {
 
     }
 }
-
+// save to file 
+template <typename T>
+void saveToFile(const std::vector<std::unique_ptr<Student<T>>>& student, const std::string& filename){
+    try {
+        std::ofstream outFile(filename);
+        if (!outFile)
+            throw std::ios_base::failure("Error opening file for saving.");
+        for (const auto& student : students){
+            outFile << student->getIDNumber() << " ,"
+            << student->getName() << ", " 
+            << student->getMarks() << "\n";
+        }
+        std::cout << "\033[1;32mStudents data saved successfully to file.\033[0m\n";
+    } catch (const std::exception e) {
+        std::cerr <<"\033[1;31mError: " << e.what() << "\033[0m\n";
+    }
+}
 
 int main() {
     std::vector<std::unique_ptr<Student<int>>> students; // using 'int' as the ID type
