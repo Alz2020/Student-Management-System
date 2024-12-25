@@ -1,7 +1,8 @@
 #include <iostream>
 #include <vector>
-#include <string>
+#include <memory>
 #include <iomanip>
+#include <limits>
 #include "student.hpp"
 
 // function to display the main menu
@@ -14,29 +15,52 @@ void displayMenu() {
     std::cout <<"4 - Show All Student\n5 - Quit program\n6 - Save to file\n7 - Load from file\n";
     std::cout << "\033[0mEnter your choice: ";
 }
+
+// input validation helper function
+template <typename T>
+T getValidatedInput(const std::string& prompt) {
+    T value;
+    while (true) {
+        std::cout << prompt;
+        std::cin >> value;
+
+        if (std::cin.fail()){
+            std::cin.clear();// Clear error 
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');// discard invalid input
+            std::cerr << "\033[1;31mInvalid input. Please try again.\033[0m\n";
+        } else {
+            break;
+        }
+    }
+    return value;
+}
+
 // function to add student 
-void addStudent(std::vector<std::unique_ptr<Student>>& students){
-    int id;
+template <typename T>
+void addStudent(std::vector<std::unique_ptr<Student<T>>>& students){
+    try {
+        T id = getValidatedInput<T>("Enter ID number: ");
+        std::cin.ignore(); 
+    }
     std::string name;
-    float marks;
-
-    std::cout << "Enter ID number:";
-    std::cin >> id;
-    std::cin.ignore(); // clear the input buffer
-
-    std::cout << "Enter name:";
+    std::cout << "Enter name: ";
     std::getline(std::cin, name);
 
-    std::cout <<"Enter marks: ";
-    std::cin >> marks;
+    float marks = getValidatedInput<float>("Enter marks (0-100):");
+    if (marks < 0 || marks > 100) {
+        throw std::invalid_argument("Marks must be between 0 and 100.");
 
-    auto newStudent = std::make_unique<Student>(id, name, marks);
+    auto newStudent = std::make_unique<Student<T>>(id, name, marks);
     students.push_back(std::move(newStudent)); 
     std::cout << "\033[1;32mStudent added successfully!\033[0m\n";
+} catch (const std::exception e){
+    std::cerr << "\033[1;31m" << e.what() << "\033[0m\n";
+}
 }
 
 //  Function to edit an existing student 
-void editStudent(std::vector<std::unique_ptr<Student>>& students) {
+template <typename T>
+void editStudent(std::vector<std::unique_ptr<Student<T>>>& students) {
     int id;
     std::cout << "Enter the ID number of the student to edit:";
     std::cin >> id;
@@ -61,7 +85,8 @@ void editStudent(std::vector<std::unique_ptr<Student>>& students) {
     std::cout << "\033[1;31mNo student found with the given ID number.\033[0m\n";
 }
 // function for search for a student
-void searchStudent(std::vector<std::unique_ptr<Student>>& students) {
+template <typename T>
+void searchStudent(std::vector<std::unique_ptr<Student<T>>>& students) {
     int id;
     std::cout << "Enter the ID number of the student to search ";
     std::cin >> id;
@@ -75,7 +100,8 @@ void searchStudent(std::vector<std::unique_ptr<Student>>& students) {
     std::cout << "\033[1;31mNo student found with the given ID number.\033[0m\n";
 }
 // function to display all students
-void showAllStudents(const std::vector<std::unique_ptr<Student>>& students) {
+template <typename T>
+void showAllStudents(const std::vector<std::unique_ptr<Student<T>>>& students) {
     if (students.empty()) { // to check if there are no student to display
     std::cout << "\033[1;31mNo student to display.\033[0m\n";
     return;
@@ -87,19 +113,19 @@ std::cout << std::left << std::setw(12) << "ID number"
         << std::setw(10) << "Marks" << "\n";
 
 for (const auto& student : students) {
-    std::cout << std::left << std::setw(12) << student->IDNumber
-    << std::setw(20) << student->name
-    << std::setw(10) << student->marks << "\n";
+    student->displayInfo();
+
     }
 }
 
 
 int main() {
-    std::vector<std::unique_ptr<Student>> students; 
+    std::vector<std::unique_ptr<Student<int>>> students; // using 'int' as the ID type
     int choice;
     do{
         displayMenu();
-        std::cin >> choice;
+        choice = getValidatedInput<int>("");
+
         switch (choice) {
         case 1:
             addStudent(students);
@@ -114,17 +140,17 @@ int main() {
             showAllStudents(students);
             break;
         case 5 :
-            std::cout << "\033[1;32mExiting \033[0m\n";
-            break;
-        case 6:
             saveToFile(students, "students.txt");
             break;
-        case 7:
+        case 6:       
             loadFromFile(students, "students.txt");
+            break;
+        case 7:
+            std::cout << "\033[1;32mExiting \033[0m\n";
             break;
         default:
             std::cout << "\033[1;31mInvalid choice. Please try again.\033[0m\n";
         }
-    }  while (choice != 5);
+    }  while (choice != 7);
     return 0;
 }

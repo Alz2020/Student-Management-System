@@ -6,19 +6,23 @@
 #include <fstream>
 #include <memory>
 #include <sstream>
+#include <iostream>
+#include <iomanip>
+#include <stdexcept>
 
-// base class person
+// base class person  template
+template <typename T>
 class Person {
 protected:
-    int IDNumber;
+    T IDNumber;
     std::string name;
 
 public:
-    Person(int id = 0, const std::string& name = "") : IDNumber(id), name(name) {}
+    Person(T id = T(), const std::string& name = "") : IDNumber(id), name(name) {}
 
     //getter and setter for id number
-    int getIDNumber() const { return IDNumber; }
-    void setIDNumber(int id) { IDNumber = id; }
+    T getIDNumber() const { return IDNumber; }
+    void setIDNumber(const T& id) { IDNumber = id; }
 
     //getter and setter for name
     const std::string& getName() const {return name; }
@@ -35,27 +39,33 @@ public:
 
 
 // derived class : student
-class Student : public Person {
+template <typename T>
+class Student : public Person<T> {
 private:
     float marks;
 public:
-    Student(int id =0, const std::string& name="", float marks =0.0f)
-    : Person(id, name), marks(marks) {}
+    Student(T id = T(), const std::string& name="", float marks =0.0f)
+        : Person<T>(id, name), marks(marks) {}
     // getter and setter for marks
 float getMarks() const { return marks; }
-void setMarks(float newMarks) { marks = newMarks; }
+void setMarks(float newMarks) { 
+    if (newMarks <0 || newMarks > 100)
+    throw std::invalid_argument(" Marks must be between 0 and 100.");
+    marks = newMarks; 
+ }
 // override displayInfo to include marks
 void displayInfo() const override {
-    Person::displayInfo();
-    std::cout << std::setw(10) << marks << std
+    Person<T>::displayInfo();
+    std::cout << std::setw(10) << marks << "\n";
     }
 };
 
-// function for file handling 
-
-void saveToFile(const std::vector<std::unique_ptr<Student>>& students, const std::string& filename);
+// function declarations 
+template <typename T>
+void saveToFile(const std::vector<std::unique_ptr<Student<T>>>& students, const std::string& filename);
 // load from file 
-void loadFromFile(std::vector<std::unique_ptr<Student>>& students, const std::string& filename);
+template <typename T>
+void loadFromFile(std::vector<std::unique_ptr<Student<T>>>& students, const std::string& filename);
 
 
 
