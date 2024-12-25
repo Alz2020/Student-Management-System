@@ -119,7 +119,7 @@ for (const auto& student : students) {
 }
 // save to file 
 template <typename T>
-void saveToFile(const std::vector<std::unique_ptr<Student<T>>>& student, const std::string& filename){
+void saveToFile(const std::vector<std::unique_ptr<Student<T>>>& students, const std::string& filename){
     try {
         std::ofstream outFile(filename);
         if (!outFile)
@@ -131,6 +131,34 @@ void saveToFile(const std::vector<std::unique_ptr<Student<T>>>& student, const s
         }
         std::cout << "\033[1;32mStudents data saved successfully to file.\033[0m\n";
     } catch (const std::exception e) {
+        std::cerr <<"\033[1;31mError: " << e.what() << "\033[0m\n";
+    }
+}
+
+// load from file
+template <typename T>
+void loadFromFile(std::vector<std::unique_ptr<Student<T>>>& students, const std::string& filename){
+    try {
+        std::ifstream inFile(filename);
+        if (!inFile)
+            throw std::ios_base::failure("Error opening file for loading.");
+        students.clear(); // clear list before loading
+        std::string line;
+        while (std::getline(inFile, line)) {
+            std::istringstream iss(line);
+            std::string idStr, name, marksStr;
+
+            if (std::getline(iss, idStr, ',') &&
+            std::getline(iss, name, ',') &&
+            std::getline(iss, marksStr)) {
+            T id = static_cast<T>(std::stol(idStr));
+            float marks = std::stof(marksStr);
+            auto newStudent = std::make_unique<Student<T>>(id, name, marks);
+            students.push_back(std::move(newStudent));
+            }
+        }
+        std::cout << "\033[1;32mStudents data loaded successfully from file.\033[0m\n";
+    } catch (const std::exception e){
         std::cerr <<"\033[1;31mError: " << e.what() << "\033[0m\n";
     }
 }
