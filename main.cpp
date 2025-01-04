@@ -12,7 +12,7 @@ void displayMenu() {
     std::cout <<"\n*******************************************\n\033[0m";
 
     std::cout <<"\033[1;32m1 - Add Student\n2 - Edit Student\n3 - Search Student\n";
-    std::cout <<"4 - Show All Student\n5 - Quit program\n6 - Save to file\n7 - Load from file\n";
+    std::cout <<"4 - Show All Student\n5 - Save to file\n6 - Load from file\n7 - Quit program\n";
     std::cout << "\033[0mEnter your choice: ";
 }
 
@@ -41,21 +41,20 @@ void addStudent(std::vector<std::unique_ptr<Student<T>>>& students){
     try {
         T id = getValidatedInput<T>("Enter ID number: ");
         std::cin.ignore(); 
+        std::string name;
+        std::cout << "Enter name: ";
+        std::getline(std::cin, name);
+
+        auto marks = getValidatedInput<float>("Enter marks (0-100):");
+        if (marks < 0 || marks > 100) 
+            throw std::invalid_argument("Marks must be between 0 and 100.");
+
+        auto newStudent = std::make_unique<Student<T>>(id, name, marks);
+        students.push_back(std::move(newStudent)); 
+        std::cout << "\033[1;32mStudent added successfully!\033[0m\n";
+    } catch (const std::exception e) {
+        std::cerr << "\033[1;31m" << e.what() << "\033[0m\n";
     }
-    std::string name;
-    std::cout << "Enter name: ";
-    std::getline(std::cin, name);
-
-    float marks = getValidatedInput<float>("Enter marks (0-100):");
-    if (marks < 0 || marks > 100) {
-        throw std::invalid_argument("Marks must be between 0 and 100.");
-
-    auto newStudent = std::make_unique<Student<T>>(id, name, marks);
-    students.push_back(std::move(newStudent)); 
-    std::cout << "\033[1;32mStudent added successfully!\033[0m\n";
-} catch (const std::exception e){
-    std::cerr << "\033[1;31m" << e.what() << "\033[0m\n";
-}
 }
 
 //  Function to edit an existing student 
@@ -193,7 +192,7 @@ int main() {
             std::cout << "\033[1;32mExiting \033[0m\n";
             break;
         default:
-            std::cout << "\033[1;31mInvalid choice. Please try again.\033[0m\n";
+            std::cout << "\033[1;31mInvalid choice. Please try again.\033[0m]\n";
         }
     }  while (choice != 7);
     return 0;
